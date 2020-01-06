@@ -1,68 +1,82 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        bird-office-integration-test
-      </h1>
-      <h2 class="subtitle">
-        My top-notch Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div>
+    <section class="just-booked">
+      <h1 class="just-booked__title">Just Booked</h1>
+      <div class="home-thumbnails">
+        <image-thumbnail v-for="(event, index) in events" :key="index" :event="event" :data-index="index" />
       </div>
-    </div>
+    </section>
   </div>
 </template>
-
 <script>
-import Logo from '~/components/Logo.vue'
+  import { mapState } from 'vuex'
+  import ImageThumbnail from '@/components/ImageThumbnail.vue'
 
-export default {
-  components: {
-    Logo
+  export default {
+    components: {
+      ImageThumbnail
+    },
+
+    computed: mapState({
+      events: (state) => state.events.events
+    }),
+
+    async fetch({ store, error }) {
+      try {
+        await store.dispatch('events/fetchEvents')
+      } catch (e) {
+        error({
+          statusCode: 503,
+          message: 'Unable to fetch events at this time. Please try again.'
+        })
+      }
+    }
   }
-}
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+<style lang="postcss">
+  .just-booked {
+    max-width: 1032px;
+    margin: 16px auto 0;
+    padding: 0 16px;
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+    &__title {
+      margin-bottom: 27px;
+      color: var(--deep-blue);
+      font-size: 32px;
+      font-weight: 600;
+    }
+  }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+  .home-thumbnails {
+    &__thumbnail {
+      color: #484848;
+      text-decoration: none;
 
-.links {
-  padding-top: 15px;
-}
+      & img {
+        width: 100%;
+      }
+
+      &__price {
+        font-weight: 700;
+      }
+
+      &__title {
+        padding-left: 10px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  @media (--medium) {
+    .just-booked {
+      margin: 78px auto 0;
+    }
+
+    .home-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(5, 194px);
+      grid-column-gap: 16px;
+    }
+  }
 </style>

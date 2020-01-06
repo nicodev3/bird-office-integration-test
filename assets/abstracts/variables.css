@@ -1,0 +1,40 @@
+:root {
+  --grey: hsla(0, 0%, 68%, 1);
+  --grey-transparent: hsla(0, 0%, 90%, .5);
+  --deep-blue: hsla(240, 1%, 22%, 1);
+  --orange-light: hsla(43, 99%, 54%, .1);
+  --accent-color: hsla(43, 99%, 54%, 1);
+}
+
+@custom-media --medium (min-width: 768px);
+@custom-media --large (min-width: 992px);
+@custom-media --extra-large (min-width: 1200px);
+
+html {
+  font-family: Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+}
+
+h1, h2 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.u-flex {
+  display: flex;
+}
+
+.u-flex-space-between {
+  justify-content: space-between;
+}
+
+.u-flex-align-center {
+  align-items: center;
+}
+
+.u-full-width {
+  width: 100%;
+}

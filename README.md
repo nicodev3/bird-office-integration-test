@@ -1,22 +1,17 @@
 # bird-office-integration-test
 
-> My top-notch Nuxt.js project
-
 ## Build Setup
 
 ``` bash
 # install dependencies
 $ npm run install
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+# install json server
+$ npm install -g json-server
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+# start server and watch local json file 
+$ json-server --watch db.json
 
-# generate static project
-$ npm run generate
+# serve with hot reload at localhost:3001
+$ PORT=3001 npm run dev
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

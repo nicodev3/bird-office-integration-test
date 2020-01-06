@@ -14,7 +14,10 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600&display=swap' }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -23,11 +26,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['modern-css-reset', '~/assets/abstracts/variables.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/filters.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -54,6 +57,25 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
+    postcss: {
+      plugins: {
+        'postcss-nested': {}
+      },
+      preset: {
+        // Change the postcss-preset-env settings
+        autoprefixer: {
+          grid: true
+        },
+        stage: 3,
+        importFrom: './assets/abstracts/variables.css',
+        features: {
+          'nesting-rules': true,
+          'custom-media-queries': true,
+          'custom-properties': true
+        },
+        browsers: 'last 2 versions'
+      }
+    }
   }
 }
