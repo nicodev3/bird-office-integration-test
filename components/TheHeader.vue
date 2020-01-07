@@ -12,7 +12,7 @@
 
       <div class="g-header__divider"></div>
       <div class="g-header__shopping">
-        <div class="g-header__shopping__count">0</div>
+        <div class="g-header__shopping__count">{{ product.counter }}</div>
         <div class="g-header__shopping__text">shopping cart</div>
         <svg xmlns="http://www.w3.org/2000/svg" width="28px" viewBox="0 0 28 25" class="g-header__shopping__logo">
           <path
@@ -27,7 +27,26 @@
 </template>
 
 <script>
-  export default {}
+  import { mapState } from 'vuex'
+
+  export default {
+    computed: mapState({
+      product: (state) => state.products.product
+    }),
+
+    /* fetch is a hook that works on client & server side
+    to fill the store before rendering the page */
+    async fetch({ store, error, params }) {
+      try {
+        await store.dispatch('products/fetchProduct', params.id)
+      } catch (e) {
+        error({
+          statusCode: 503,
+          message: 'Unable to fetch product #' + params.id
+        })
+      }
+    }
+  }
 </script>
 
 <style lang="postcss">

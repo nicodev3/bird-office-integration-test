@@ -3,7 +3,23 @@
     <section class="just-booked">
       <h1 class="just-booked__title">Just Booked</h1>
       <div class="home-thumbnails">
-        <image-thumbnail v-for="(event, index) in events" :key="index" :event="event" :data-index="index" />
+        <image-thumbnail
+          v-for="(product, index) in bookedProducts"
+          :key="index"
+          :product="product"
+          :data-index="index"
+        />
+      </div>
+    </section>
+    <section class="just-booked">
+      <h1 class="just-booked__title">Featured experiences</h1>
+      <div class="home-thumbnails">
+        <image-thumbnail
+          v-for="(product, index) in availableProducts"
+          :key="index"
+          :product="product"
+          :data-index="index"
+        />
       </div>
     </section>
   </div>
@@ -18,16 +34,17 @@
     },
 
     computed: mapState({
-      events: (state) => state.events.events
+      bookedProducts: (state) => state.products.products.filter((product) => product.booked),
+      availableProducts: (state) => state.products.products.filter((product) => !product.booked)
     }),
 
     async fetch({ store, error }) {
       try {
-        await store.dispatch('events/fetchEvents')
+        await store.dispatch('products/fetchProducts')
       } catch (e) {
         error({
           statusCode: 503,
-          message: 'Unable to fetch events at this time. Please try again.'
+          message: 'Unable to fetch products at this time. Please try again.'
         })
       }
     }

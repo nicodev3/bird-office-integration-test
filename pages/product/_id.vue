@@ -2,13 +2,11 @@
   <div class="container">
     <div class="c-product">
       <div class="c-product__text">
-        <h1 class="c-product__title">{{ event.title }}</h1>
-        <h2 class="c-product__price">EUR {{ event.price | currency }}</h2>
+        <h1 class="c-product__title">{{ product.title }}</h1>
+        <h2 class="c-product__price">EUR {{ product.price | currency }}</h2>
         <hr class="c-product__hr" />
-        <p class="c-product__description">{{ event.description[0] }}</p>
-        <p v-if="event.description[1]" class="c-product__description">
-          {{ event.description[1] }}
-        </p>
+        <p class="c-product__description">{{ product.description[0] }}</p>
+        <p class="c-product__description">{{ product.description[1] }}</p>
         <p class="c-product__warning">
           Prices valid till 31.10.2019, yearly adjustment for conversion rate to EURO
         </p>
@@ -23,8 +21,8 @@
                 />
               </svg>
             </button>
-            <span>{{ event.counter }}</span>
-            <button @click="incrementCOunter" class="c-product__cart__changer__button">
+            <span>{{ count }}</span>
+            <button @click="addProduct" class="c-product__cart__changer__button">
               <svg xmlns="http://www.w3.org/2000/svg" width="12px" viewBox="0 0 12 12">
                 <path
                   d="M6 0a1 1 0 011 1v4h4a1 1 0 010 2H7v4a1 1 0 01-2 0V7H1a1 1 0 01-1-1 1 1 0 011-1h4V1a1 1 0 011-1z"
@@ -37,7 +35,7 @@
           <button class="c-product__cart__add-button">Add to Cart</button>
         </div>
       </div>
-      <div :style="{ backgroundImage: `url(/${event.image}.jpg)` }" class="c-product__image"></div>
+      <div :style="{ backgroundImage: `url(/${product.image}.jpg)` }" class="c-product__image"></div>
     </div>
   </div>
 </template>
@@ -45,20 +43,33 @@
   import { mapState } from 'vuex'
 
   export default {
+    data() {
+      return {
+        count: 0
+      }
+    },
+
     computed: mapState({
-      event: (state) => state.events.event
+      product: (state) => state.products.product
     }),
 
     /* fetch is a hook that works on client & server side
     to fill the store before rendering the page */
     async fetch({ store, error, params }) {
       try {
-        await store.dispatch('events/fetchEvent', params.id)
+        await store.dispatch('products/fetchProduct', params.id)
       } catch (e) {
         error({
           statusCode: 503,
-          message: 'Unable to fetch event #' + params.id
+          message: 'Unable to fetch product #' + params.id
         })
+      }
+    },
+
+    methods: {
+      addProduct() {
+        console.log('toto')
+        this.$store.dispatch('products/updateProduct', this.count)
       }
     }
   }
