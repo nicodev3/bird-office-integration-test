@@ -12,7 +12,7 @@
         </p>
         <div class="c-product__cart u-flex u-flex-space-between u-flex-align-center">
           <div class="c-product__cart__changer u-flex u-flex-space-between u-flex-align-center">
-            <button class="c-product__cart__changer__button">
+            <button @click="removeProduct" class="c-product__cart__changer__button">
               <svg xmlns="http://www.w3.org/2000/svg" width="12px" viewBox="0 0 13.23 2.2">
                 <path
                   d="M0 1.1A1.1 1.1 0 011.1 0h11a1.1 1.1 0 010 2.2h-11a1.1 1.1 0 01-.78-.32A1.09 1.09 0 010 1.1z"
@@ -32,7 +32,7 @@
               </svg>
             </button>
           </div>
-          <button class="c-product__cart__add-button">Add to Cart</button>
+          <button @click="addProductToCart" class="c-product__cart__add-button">Add to Cart</button>
         </div>
       </div>
       <div :style="{ backgroundImage: `url(/${product.image}.jpg)` }" class="c-product__image"></div>
@@ -68,8 +68,14 @@
 
     methods: {
       addProduct() {
-        console.log('toto')
-        this.$store.dispatch('products/updateProduct', this.count)
+        this.count++
+      },
+      removeProduct() {
+        this.count--
+      },
+      // todo: dispatch this to store
+      addProductToCart() {
+        console.log(`omg, I didn't have time to implement this !`)
       }
     }
   }
