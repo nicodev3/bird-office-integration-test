@@ -67,11 +67,14 @@
 
   .home-thumbnails {
     &__thumbnail {
+      display: block;
+      margin-bottom: 25px;
       color: #484848;
       text-decoration: none;
 
       & img {
         width: 100%;
+        margin-bottom: 8px;
       }
 
       &__price {
@@ -94,6 +97,14 @@
       display: grid;
       grid-template-columns: repeat(5, 194px);
       grid-column-gap: 16px;
+
+      &__thumbnail {
+        margin-bottom: 0;
+
+        & img {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 </style>

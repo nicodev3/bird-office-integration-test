@@ -113,7 +113,7 @@
 
     &__cart {
       width: 283px;
-      margin-top: 76px;
+      margin-top: 20px;
 
       &__changer {
         width: 120px;
@@ -181,6 +181,10 @@
         height: 78vh;
         background-position: 0 0;
         background-size: cover;
+      }
+
+      &__cart {
+        margin-top: 76px;
       }
     }
   }
